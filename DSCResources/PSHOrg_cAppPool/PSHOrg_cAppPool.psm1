@@ -315,11 +315,11 @@ function Set-TargetResource
             #[xml] $PoolConfig
             [xml]$PoolConfig = & $env:SystemRoot\system32\inetsrv\appcmd.exe list apppool $Name /config:*
 
-            #Update autoStart if required
-            if($PoolConfig.add.autoStart -ne $autoStart){
-                $UpdateNotRequired = $false
+            #Update autoStart if required - Removed the check because in IIS 8.5 it is always returning true for the check hence not actually setting the autoStart property
+            #if($PoolConfig.add.autoStart -ne $autoStart){
+            #    $UpdateNotRequired = $false
                 & $env:SystemRoot\system32\inetsrv\appcmd.exe set apppool $Name /autoStart:$autoStart
-            }
+            #}
 
             #update managedRuntimeVersion if required
             if($PoolConfig.add.managedRuntimeVersion -ne $managedRuntimeVersion){
